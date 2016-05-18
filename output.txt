@@ -1,0 +1,10 @@
+FILE IS WORK While (inputStream.hasNext()){
+
+    char symbol = inputStream.read();
+
+{
+    
+jlhlhl;
+
+}
+ 
