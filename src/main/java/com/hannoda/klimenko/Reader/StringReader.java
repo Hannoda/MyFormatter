@@ -2,22 +2,22 @@ package com.hannoda.klimenko.Reader;
 
 import java.io.*;
 
+
 /**
- * Created by hanno on 16.05.2016.
+ * Provides reading first character of the String
  */
 public  class StringReader implements IReader {
 
     private char ch;
     private int index = 0;
 
-
     /**
+     * reading first character of the String s
      * @param s
      * @return
      * @throws IOException
      */
     public char read(String s)throws IOException {
-
 
         java.io.StringReader input = new java.io.StringReader(s);
 
@@ -34,7 +34,7 @@ public  class StringReader implements IReader {
 
 
     /**
-     *
+     * Field values ​​to the initial state
      */
     public void close() {
         index=0;
@@ -42,10 +42,18 @@ public  class StringReader implements IReader {
 
     }
 
+    /**
+     * Gets the value of index
+     * @return value of index
+     */
     public int getIndex() {
         return index;
     }
 
+    /**
+     * Sets the value of index
+     * @param index
+     */
     public void setIndex(int index) {
         this.index = index;
     }

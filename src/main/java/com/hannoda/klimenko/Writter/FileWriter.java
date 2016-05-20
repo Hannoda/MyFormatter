@@ -5,19 +5,20 @@ import java.nio.charset.Charset;
 
 
 /**
- *
+ *Provides writing character of the file
  */
 public class FileWriter implements IWriter {
 
+    OutputStream fileStream = new FileOutputStream(new File("output.txt"));
+    Writer fileWriter = new OutputStreamWriter(fileStream);
+    PrintWriter printWriter = new PrintWriter(fileWriter, true);
+
+    /**
+     *Constructor
+     * @throws FileNotFoundException
+     */
     public FileWriter() throws FileNotFoundException {
     }
-
-
-    OutputStream fileStream = new FileOutputStream(new File("output.txt"));
-
-    Writer fileWriter = new OutputStreamWriter(fileStream);
-    // Writer fileWriter = new OutputStreamWriter(fileStream);
-    PrintWriter printWriter = new PrintWriter(fileWriter, true);
 
     /**
      * @param st
@@ -38,6 +39,7 @@ public class FileWriter implements IWriter {
     }
 
     /**
+     * Closes the stream
      * @throws IOException
      */
     public void close() throws IOException {

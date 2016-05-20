@@ -1,5 +1,4 @@
 package com.hannoda.klimenko.Formatter;
-//import com.hannoda.klimenko.Formatter.Formatter.Formater;
 
 import com.hannoda.klimenko.Reader.FileReader;
 import com.hannoda.klimenko.Reader.IReader;
@@ -10,14 +9,9 @@ import java.io.IOException;
 
 
 /**
- *
+ *Provides formatting of character of the file
  */
 public class FileFormatter implements Formater {
-
-    // String s = "while (inputStream.hasNext()) {char symbol = inputStream.read();{jlhlhl;}}";
-
-    // BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
-    //String str[] = new String[100];
 
 
     /**
@@ -28,24 +22,20 @@ public class FileFormatter implements Formater {
      */
     public int format(FileReader reader, IWriter writer) throws IOException {
 
-        String s = "While (inputStream.hasNext()) {char symbol = inputStream.read();{jlhlhl;}";
+        String s = "input.txt";
 
         while (reader.getNextSymb() != -1) {
 
-            // for (int i = 0; i < s.length(); i++) {
             char aloneSymbol = reader.read(s);
             switch (aloneSymbol) {
                 case ';':
-                    writer.write(String.valueOf(aloneSymbol));
-                    writer.write("\n");
+                    writer.write(String.valueOf(aloneSymbol)+"\r\n");
                     break;
                 case '{':
-                    writer.write(String.valueOf(aloneSymbol));
-                    writer.write("\n    ");
+                    writer.write(String.valueOf(aloneSymbol)+"\r\n    ");
                     break;
                 case '}':
-                    writer.write(String.valueOf(aloneSymbol));
-                    writer.write("\n");
+                    writer.write(String.valueOf(aloneSymbol)+"\r\n");
                     break;
 
                 default:
@@ -56,15 +46,6 @@ public class FileFormatter implements Formater {
 
         reader.close();
         return 0;
-
-    }
-
-    public boolean hasNext(IReader reader) throws IOException {
-
-        String s = "While (inputStream.hasNext()) {char symbol = inputStream.read();{jlhlhl;}";
-        if ((reader.read(s)) != -1) ;
-
-        return true;
 
     }
 

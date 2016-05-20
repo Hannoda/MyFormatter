@@ -6,8 +6,9 @@ import com.hannoda.klimenko.Writter.IWriter;
 
 import java.io.IOException;
 
+
 /**
- * Created by hanno on 15.05.2016.
+ * Provides formatting of input
  */
 public interface Formater {
     int format(IReader k, IWriter l) throws IOException;

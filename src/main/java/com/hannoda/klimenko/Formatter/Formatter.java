@@ -6,18 +6,18 @@ import com.hannoda.klimenko.Writter.IWriter;
 import java.io.IOException;
 
 /**
- * .
+ * Provides formatting of character of the string
  */
 public class Formatter implements Formater {
 
     /**
+     * Formatting of character of the string
      * @param reader
      * @param writer
      * @return
      * @throws IOException
      */
     public int format(IReader reader, IWriter writer) throws IOException {
-
 
         String s = "While (inputStream.hasNext()) {char symbol = inputStream.read();{jlhlhl;}";
 
@@ -43,10 +43,7 @@ public class Formatter implements Formater {
             }
         }
 
-        reader.close();
-        writer.close();
         return 0;
-
     }
 }
 
