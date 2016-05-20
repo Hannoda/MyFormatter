@@ -7,28 +7,41 @@ import com.hannoda.klimenko.Reader.FileReader;
 import com.hannoda.klimenko.Reader.StringReader;
 import com.hannoda.klimenko.Writter.FileWriter;
 import com.hannoda.klimenko.Writter.StringWriter;
+import com.hannoda.klimenko.Writter.WriterException;
 
 import java.io.*;
 
 /**
  * Main
  */
-public class App
-{
-    public static void main( String[] args ) throws IOException
-    {
+public class App {
+    public static void main(String[] args) throws WriterException {
 
         StringReader stringReader = new StringReader();
         StringWriter stringWriter = new StringWriter();
 
         FileReader fileReader = new FileReader();
-        FileWriter fileWriter = new FileWriter();
+
+
+        FileWriter fileWriter = null;
+        try {
+            fileWriter = new FileWriter("output.txt");
+        } catch (WriterException e) {
+            e.printStackTrace();
+            throw new WriterException("WriterException", e);
+
+        }
 
         Formatter formatter = new Formatter();
         FileFormatter fileFormatter = new FileFormatter();
 
-        //fileFormatter.format(fileReader,stringWriter);
-       fileFormatter.format(fileReader,fileWriter);
+        try {
+            fileFormatter.format(fileReader, fileWriter);
+        } catch (ReaderException e) {
+            e.printStackTrace();
+            throw new WriterException("ReaderException", e);
+        }
+
 
     }
 }

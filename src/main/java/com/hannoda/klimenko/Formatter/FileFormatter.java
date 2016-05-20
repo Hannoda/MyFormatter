@@ -2,14 +2,16 @@ package com.hannoda.klimenko.Formatter;
 
 import com.hannoda.klimenko.Reader.FileReader;
 import com.hannoda.klimenko.Reader.IReader;
+import com.hannoda.klimenko.Reader.ReaderException;
 import com.hannoda.klimenko.Writter.IWriter;
+import com.hannoda.klimenko.Writter.WriterException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 
 
 /**
- *Provides formatting of character of the file
+ * Provides formatting of character of the file
  */
 public class FileFormatter implements Formater {
 
@@ -20,36 +22,50 @@ public class FileFormatter implements Formater {
      * @return
      * @throws IOException
      */
-    public int format(FileReader reader, IWriter writer) throws IOException {
+    public int format(FileReader reader, IWriter writer) throws ReaderException, WriterException {
 
+        char aloneSymbol;
         String s = "input.txt";
+        try {
+            while (reader.getNextSymb() != -1) {
+                aloneSymbol = reader.read(s);
 
-        while (reader.getNextSymb() != -1) {
+                switch (aloneSymbol) {
+                    case ';':
+                        writer.write(String.valueOf(aloneSymbol) + "\r\n");
+                        break;
+                    case '{':
+                        writer.write(String.valueOf(aloneSymbol) + "\r\n    ");
+                        break;
+                    case '}':
+                        writer.write(String.valueOf(aloneSymbol) + "\r\n");
+                        break;
 
-            char aloneSymbol = reader.read(s);
-            switch (aloneSymbol) {
-                case ';':
-                    writer.write(String.valueOf(aloneSymbol)+"\r\n");
-                    break;
-                case '{':
-                    writer.write(String.valueOf(aloneSymbol)+"\r\n    ");
-                    break;
-                case '}':
-                    writer.write(String.valueOf(aloneSymbol)+"\r\n");
-                    break;
+                    default:
+                        writer.write(String.valueOf(aloneSymbol));
+                        break;
+                }
 
-                default:
-                    writer.write(String.valueOf(aloneSymbol));
-                    break;
             }
+        } catch (ReaderException er) {
+            er.printStackTrace();
+            throw new ReaderException("hkh", er);
+        } catch (WriterException e) {
+            e.printStackTrace();
+            throw new WriterException("WriterException", e);
         }
 
-        reader.close();
+        try {
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new ReaderException("IOException", e);
+        }
         return 0;
 
     }
 
-    public int format(IReader k, IWriter l) throws IOException {
+    public int format(IReader k, IWriter l) {
         return 0;
     }
 }

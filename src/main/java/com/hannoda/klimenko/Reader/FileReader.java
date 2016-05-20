@@ -8,23 +8,24 @@ import java.io.*;
 public class FileReader implements IReader {
 
     InputStream fileStream;
-     //  Reader fileReader;
-   // BufferedReader reader;
+    //  Reader fileReader;
+    // BufferedReader reader;
 
     private char ch;
     private int index = 0;
     private int nextSymb;
 
-   /*
-    public FileReader(String path) throws FileNotFoundException {
-        fileStream = new FileInputStream(new File(path));
-        fileReader = new InputStreamReader(fileStream);
-        reader = new BufferedReader(fileReader);
-    }
-*/
+    /*
+     public FileReader(String path) throws FileNotFoundException {
+         fileStream = new FileInputStream(new File(path));
+         fileReader = new InputStreamReader(fileStream);
+         reader = new BufferedReader(fileReader);
+     }
+ */
     private char getCh() {
         return ch;
     }
+
     private void setCh(char ch) {
         this.ch = ch;
     }
@@ -32,6 +33,7 @@ public class FileReader implements IReader {
     public int getNextSymb() {
         return nextSymb;
     }
+
     private void setNextSymb(int nextSymb) {
         this.nextSymb = nextSymb;
     }
@@ -40,9 +42,16 @@ public class FileReader implements IReader {
         this.index = index;
     }
 
-   public BufferedReader FileReader() throws FileNotFoundException {
+    public BufferedReader FileReader() throws ReaderException {
 
-        fileStream = new FileInputStream(new File("input.txt"));
+        try {
+            fileStream = new FileInputStream(new File("input.txt"));
+
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            throw new ReaderException("FileNotFound", e);
+        }
         Reader fileReader = new InputStreamReader(fileStream);
         BufferedReader reader = new BufferedReader(fileReader);
         return reader;
@@ -51,28 +60,44 @@ public class FileReader implements IReader {
 
     /**
      * reading first character of the file
+     *
      * @param path
      * @return
      * @throws IOException
      */
 
-    public char read(String path) throws IOException {
+    public char read(String path) throws ReaderException {
 
-        InputStream fileStream = new FileInputStream(new File(path));
-        Reader fileReader = new InputStreamReader(fileStream);
-        BufferedReader reader = new BufferedReader(fileReader);
-        reader.skip((long) index);
-        nextSymb = getNext(reader);
 
-        if (nextSymb != -1)
-        {
-            this.ch = (char)nextSymb;
-            reader.mark(index);
-            setIndex(index + 1);
-            return this.ch;
-        } else {
-            reader.close();
-            return '\u0000';
+        try {
+
+            InputStream fileStream = null;
+            fileStream = new FileInputStream(new File(path));
+            Reader fileReader = new InputStreamReader(fileStream);
+            BufferedReader reader = new BufferedReader(fileReader);
+
+            reader.skip((long) index);
+            nextSymb = getNext(reader);
+
+
+            if (nextSymb != -1) {
+                this.ch = (char) nextSymb;
+
+                reader.mark(index);
+
+                setIndex(index + 1);
+                return this.ch;
+            } else {
+                reader.close();
+
+                return '\u0000';
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            throw new ReaderException("FileNotFound", e);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new ReaderException("IOException", e);
         }
     }
 
@@ -80,11 +105,12 @@ public class FileReader implements IReader {
      * Closes the stream
      */
     public void close() throws IOException {
-    this.fileStream.close();
+//    this.fileStream.close();
     }
 
     /**
-     *returns the character if it exists
+     * returns the character if it exists
+     *
      * @param reader
      * @return nextSymbol or end of file character
      * @throws IOException

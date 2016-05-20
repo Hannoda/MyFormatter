@@ -8,7 +8,8 @@ import com.hannoda.klimenko.Writter.IWriter;
 public class StringWriter implements IWriter {
 
     /**
-     *Writing character of the string and output on the console
+     * Writing character of the string and output on the console
+     *
      * @param s
      */
     public void write(String s) {
