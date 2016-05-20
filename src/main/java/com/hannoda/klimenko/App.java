@@ -9,7 +9,6 @@ import com.hannoda.klimenko.Writter.FileWriter;
 import com.hannoda.klimenko.Writter.StringWriter;
 import com.hannoda.klimenko.Writter.WriterException;
 
-import java.io.*;
 
 /**
  * Main
@@ -35,8 +34,10 @@ public class App {
         Formatter formatter = new Formatter();
         FileFormatter fileFormatter = new FileFormatter();
 
+
         try {
             fileFormatter.format(fileReader, fileWriter);
+            formatter.format(stringReader,stringWriter);
         } catch (ReaderException e) {
             e.printStackTrace();
             throw new WriterException("ReaderException", e);

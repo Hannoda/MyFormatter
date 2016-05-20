@@ -4,7 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 /**
- * Created by hanno on 20.05.2016.
+ * ReaderException
  */
 public class ReaderException extends Exception {
     private Exception hidden;
@@ -24,7 +24,9 @@ public class ReaderException extends Exception {
         hidden = e;
     }
 
-    public ReaderException(String s, ReaderException e) {
+    public ReaderException(String message, ReaderException e) {
+        super(message);
+        hidden = e;
     }
 
     public ReaderException(String message, FileNotFoundException e) {

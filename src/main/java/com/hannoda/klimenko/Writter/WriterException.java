@@ -1,13 +1,15 @@
 package com.hannoda.klimenko.Writter;
 
+
 /**
- * Created by hanno on 20.05.2016.
+ * WriterException
  */
 public class WriterException extends Exception {
     private Exception hidden;
 
-    public WriterException(String fileNotFound, Exception e) {
-
+    public WriterException(String message, Exception e) {
+        super(message);
+        hidden = e;
     }
 
     public Exception getHiddenException() {

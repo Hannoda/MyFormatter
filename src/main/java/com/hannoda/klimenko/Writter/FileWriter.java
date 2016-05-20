@@ -1,9 +1,5 @@
 package com.hannoda.klimenko.Writter;
-
-import com.hannoda.klimenko.Reader.ReaderException;
-
 import java.io.*;
-import java.nio.charset.Charset;
 
 
 /**
@@ -31,14 +27,14 @@ public class FileWriter implements IWriter {
     /**
      * Constructor
      *
-     * @throws FileNotFoundException
+     * @throws WriterException
      */
     public FileWriter() throws WriterException {
     }
 
     /**
      * @param st
-     * @throws IOException
+     * @throws WriterException
      */
     public void write(String st) throws WriterException {
 
@@ -58,9 +54,9 @@ public class FileWriter implements IWriter {
     /**
      * Closes the stream
      *
-     * @throws IOException
+     * @throws WriterException
      */
-    public void close() throws IOException {
+    public void close() throws WriterException {
         printWriter.close();
     }
 }

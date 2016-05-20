@@ -16,7 +16,7 @@ public class StringReader implements IReader {
      *
      * @param s
      * @return
-     * @throws IOException
+     * @throws ReaderException
      */
     public char read(String s) throws ReaderException {
 

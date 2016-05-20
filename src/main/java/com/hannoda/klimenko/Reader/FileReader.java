@@ -3,41 +3,61 @@ package com.hannoda.klimenko.Reader;
 import java.io.*;
 
 /**
- * Provides reading first character of the file
+ * Provides reading character of the file
  */
 public class FileReader implements IReader {
 
     InputStream fileStream;
-    //  Reader fileReader;
-    // BufferedReader reader;
 
+    /**
+     * Character of the file
+     */
     private char ch;
+    /**
+     * Character index of the file
+     */
     private int index = 0;
+    /**
+     * Next symbol of the file
+     */
     private int nextSymb;
 
-    /*
-     public FileReader(String path) throws FileNotFoundException {
-         fileStream = new FileInputStream(new File(path));
-         fileReader = new InputStreamReader(fileStream);
-         reader = new BufferedReader(fileReader);
-     }
- */
+    /**
+     * Gets character of the file
+     * @return character of the file
+     */
     private char getCh() {
         return ch;
     }
 
+    /**
+     * Sets character of the file
+     * @param ch
+     */
     private void setCh(char ch) {
         this.ch = ch;
     }
 
+    /**
+     * Gets next symbol of the file
+     * @return next symbol of the file
+     */
     public int getNextSymb() {
         return nextSymb;
     }
 
+    /**
+     * Sets next symbol of the file
+     * @param nextSymb
+     */
     private void setNextSymb(int nextSymb) {
         this.nextSymb = nextSymb;
     }
 
+    /**
+     * Sets index of the file
+     * @param index
+     */
     private void setIndex(int index) {
         this.index = index;
     }
@@ -59,11 +79,11 @@ public class FileReader implements IReader {
 
 
     /**
-     * reading first character of the file
+     * Reading first character of the file
      *
      * @param path
-     * @return
-     * @throws IOException
+     * @return first character of the file
+     * @throws ReaderException
      */
 
     public char read(String path) throws ReaderException {
@@ -103,8 +123,9 @@ public class FileReader implements IReader {
 
     /**
      * Closes the stream
+     * @throws ReaderException
      */
-    public void close() throws IOException {
+    public void close() throws ReaderException {
 //    this.fileStream.close();
     }
 
@@ -113,11 +134,17 @@ public class FileReader implements IReader {
      *
      * @param reader
      * @return nextSymbol or end of file character
-     * @throws IOException
+     * @throws ReaderException
      */
-    public int getNext(BufferedReader reader) throws IOException {
+    public int getNext(BufferedReader reader) throws ReaderException {
 
-        int nextSymbol = reader.read();
+        int nextSymbol = 0;
+        try {
+            nextSymbol = reader.read();
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
         if (nextSymbol != -1)
             return nextSymbol;
         else {

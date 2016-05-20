@@ -6,9 +6,6 @@ import com.hannoda.klimenko.Reader.ReaderException;
 import com.hannoda.klimenko.Writter.IWriter;
 import com.hannoda.klimenko.Writter.WriterException;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-
 
 /**
  * Provides formatting of character of the file
@@ -20,7 +17,7 @@ public class FileFormatter implements Formater {
      * @param reader
      * @param writer
      * @return
-     * @throws IOException
+     * @throws ReaderException, WriterException
      */
     public int format(FileReader reader, IWriter writer) throws ReaderException, WriterException {
 
@@ -55,12 +52,7 @@ public class FileFormatter implements Formater {
             throw new WriterException("WriterException", e);
         }
 
-        try {
-            reader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new ReaderException("IOException", e);
-        }
+        reader.close();
         return 0;
 
     }

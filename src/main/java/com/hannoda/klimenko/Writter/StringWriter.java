@@ -1,6 +1,6 @@
 package com.hannoda.klimenko.Writter;
 
-import com.hannoda.klimenko.Writter.IWriter;
+
 
 /**
  * Provides writing character of the string
