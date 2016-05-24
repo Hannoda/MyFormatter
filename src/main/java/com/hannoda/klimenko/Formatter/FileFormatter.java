@@ -1,41 +1,58 @@
 package com.hannoda.klimenko.Formatter;
 
-import com.hannoda.klimenko.Reader.FileReader;
+
 import com.hannoda.klimenko.Reader.IReader;
 import com.hannoda.klimenko.Reader.ReaderException;
 import com.hannoda.klimenko.Writter.IWriter;
 import com.hannoda.klimenko.Writter.WriterException;
 
 
+
 /**
  * Provides formatting of character of the file
  */
-public class FileFormatter implements Formater {
+public class FileFormatter {
+    public int getIndent() {
+        return indent;
+    }
+
+    public void setIndent(int indent) {
+        this.indent = indent;
+        if(indent<0)this.indent = 0;
+    }
+    public void addIndent(int num){
+    setIndent(getIndent()+num);
+    }
+    public void decreaseIndent(int num){
+    setIndent(getIndent()-num);
+    }
+
+    int indent=0;
 
 
-    /**
-     * @param reader
-     * @param writer
-     * @return
-     * @throws ReaderException, WriterException
-     */
-    public int format(FileReader reader, IWriter writer) throws ReaderException, WriterException {
-
+    public int format(IReader reader, IWriter writer) throws ReaderException, WriterException {
         char aloneSymbol;
-        String s = "input.txt";
         try {
-            while (reader.getNextSymb() != -1) {
-                aloneSymbol = reader.read(s);
-
+            while (reader.getNext() != -1) {
+                aloneSymbol = reader.read();
                 switch (aloneSymbol) {
                     case ';':
-                        writer.write(String.valueOf(aloneSymbol) + "\r\n");
+                        writer.write(String.valueOf(aloneSymbol)+System.lineSeparator());
+                        writer.printIndent(indent);
                         break;
                     case '{':
-                        writer.write(String.valueOf(aloneSymbol) + "\r\n    ");
+
+                        writer.write(String.valueOf(aloneSymbol)+System.lineSeparator());
+                        addIndent(4);
+                        writer.printIndent(indent);
                         break;
                     case '}':
-                        writer.write(String.valueOf(aloneSymbol) + "\r\n");
+
+                        decreaseIndent(4);
+                        writer.write("\r\n");
+                        writer.printIndent(indent);
+                        writer.write(String.valueOf(aloneSymbol)+System.lineSeparator());
+
                         break;
 
                     default:
@@ -52,13 +69,13 @@ public class FileFormatter implements Formater {
             throw new WriterException("WriterException", e);
         }
 
-        reader.close();
+        //reader.close();
         return 0;
 
     }
 
-    public int format(IReader k, IWriter l) {
-        return 0;
-    }
+   // public int format(IReader k, IWriter l) {
+    //    return 0;
+   // }
 }
 

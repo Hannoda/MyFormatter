@@ -9,9 +9,11 @@ public interface IReader {
     /**
      * Reading
      *
-     * @param s
+     *
      * @return
      * @throws ReaderException
      */
-    char read(String s) throws ReaderException;
+    char read() throws ReaderException;
+    public int getNext() throws ReaderException;
+    void close() throws ReaderException;
 }

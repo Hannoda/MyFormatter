@@ -1,6 +1,6 @@
 package com.hannoda.klimenko;
 
-import com.hannoda.klimenko.Formatter.FileFormatter;
+
 import com.hannoda.klimenko.Formatter.Formatter;
 import com.hannoda.klimenko.Reader.*;
 import com.hannoda.klimenko.Reader.FileReader;
@@ -16,33 +16,23 @@ import com.hannoda.klimenko.Writter.WriterException;
 public class App {
     public static void main(String[] args) throws WriterException {
 
-        StringReader stringReader = new StringReader();
-        StringWriter stringWriter = new StringWriter();
 
-        FileReader fileReader = new FileReader();
-
-
-        FileWriter fileWriter = null;
-        try {
-            fileWriter = new FileWriter("output.txt");
-        } catch (WriterException e) {
-            e.printStackTrace();
-            throw new WriterException("WriterException", e);
-
-        }
-
-        Formatter formatter = new Formatter();
-        FileFormatter fileFormatter = new FileFormatter();
-
+        Formatter fileFormatter = new Formatter();
+        Formatter stringFormatter = new Formatter();
 
         try {
-            fileFormatter.format(fileReader, fileWriter);
-            formatter.format(stringReader,stringWriter);
+
+            fileFormatter.format(new FileReader(),new FileWriter());
+            stringFormatter.format(new StringReader(),new StringWriter());
+
         } catch (ReaderException e) {
             e.printStackTrace();
             throw new WriterException("ReaderException", e);
+        } catch (WriterException e) {
+            e.printStackTrace();
+            throw new WriterException("WriterException", e);
         }
 
-
     }
+
 }

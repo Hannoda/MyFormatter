@@ -1,63 +1,79 @@
 package com.hannoda.klimenko.Formatter;
 
+
 import com.hannoda.klimenko.Reader.IReader;
 import com.hannoda.klimenko.Reader.ReaderException;
 import com.hannoda.klimenko.Writter.IWriter;
 import com.hannoda.klimenko.Writter.WriterException;
 
-import java.io.IOException;
-import java.util.WeakHashMap;
+
+
 
 /**
- * Provides formatting of character of the string
+ * Provides formatting of character of the file
  */
-public class Formatter implements Formater {
+public class Formatter {
+    public int getIndent() {
+        return indent;
+    }
+
+    public void setIndent(int indent) {
+        this.indent = indent;
+        if(indent<0)this.indent = 0;
+    }
+    public void addIndent(int num){
+        setIndent(getIndent()+num);
+    }
+    public void decreaseIndent(int num){
+        setIndent(getIndent()-num);
+    }
+
+    int indent=0;
 
 
-    /**
-     * Formatting of character of the string
-     *
-     * @param reader
-     * @param writer
-     * @return
-     * @throws ReaderException
-     * @throws WriterException
-     */
     public int format(IReader reader, IWriter writer) throws ReaderException, WriterException {
-
-        String s = "While (inputStream.hasNext()) {char symbol = inputStream.read();{jlhlhl;}";
-
-        for (int i = 0; i < s.length(); i++) {
-            char aloneSymbol = 0;
-            try {
-                aloneSymbol = reader.read(s);
-
+        char aloneSymbol;
+        try {
+            while (reader.getNext() != -1) {
+                aloneSymbol = reader.read();
                 switch (aloneSymbol) {
                     case ';':
-                        writer.write(String.valueOf(aloneSymbol));
-                        writer.write("\n");
+                        writer.write(String.valueOf(aloneSymbol)+System.lineSeparator());
+                        writer.printIndent(indent);
                         break;
                     case '{':
-                        writer.write(String.valueOf(aloneSymbol));
-                        writer.write("\n    ");
+
+                        writer.write(String.valueOf(aloneSymbol)+System.lineSeparator());
+                        addIndent(4);
+                        writer.printIndent(indent);
                         break;
                     case '}':
-                        writer.write(String.valueOf(aloneSymbol));
-                        writer.write("\n");
+
+                        decreaseIndent(4);
+                        writer.write("\r\n");
+                        writer.printIndent(indent);
+                        writer.write(String.valueOf(aloneSymbol)+System.lineSeparator());
+
                         break;
 
                     default:
                         writer.write(String.valueOf(aloneSymbol));
                         break;
                 }
-            } catch (ReaderException e) {
-                e.printStackTrace();
-            } catch (WriterException e) {
-                e.printStackTrace();
+
             }
+        } catch (ReaderException er) {
+            er.printStackTrace();
+            throw new ReaderException("hkh", er);
+        } catch (WriterException e) {
+            e.printStackTrace();
+            throw new WriterException("WriterException", e);
         }
 
+        reader.close();
         return 0;
+
     }
+
 }
 

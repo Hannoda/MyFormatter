@@ -6,31 +6,31 @@ import java.io.*;
 /**
  * Provides reading first character of the String
  */
-public class StringReader implements IReader {
+public class StringReader implements IReader{
 
     private char ch;
     private int index = 0;
+    private int nextSymbol;
+    String s ="while (inputStream.hasNext()){char symbol = inputStream.read();if(symbol == ‘ ‘){whiteSpaceCount++;}}";
+    java.io.StringReader reader;
 
+    public StringReader(){
+        reader = new java.io.StringReader(s);
+    }
     /**
      * reading first character of the String s
      *
-     * @param s
+     * @param
      * @return
      * @throws ReaderException
      */
-    public char read(String s) throws ReaderException {
-
-        java.io.StringReader input = new java.io.StringReader(s);
+    public char read() throws ReaderException {
 
         try {
-            if ((input.read()) != -1) {
-
-                input.reset();
-
-                input.skip((long) index);
-                this.ch = (char) input.read();
-
-                input.mark(index);
+            if (nextSymbol != -1) {
+               // reader.reset();
+                this.ch = (char)nextSymbol;
+                reader.mark(index);
                 setIndex(index + 1);
             } else close();
         } catch (IOException e) {
@@ -39,14 +39,13 @@ public class StringReader implements IReader {
         return this.ch;
     }
 
-
     /**
      * Field values ​​to the initial state
      */
     public void close() {
-        index = 0;
-        this.ch = '\u0000';
-
+       // index = 0;
+        //this.ch = '\u0000';
+        reader.close();
     }
 
     /**
@@ -65,5 +64,23 @@ public class StringReader implements IReader {
      */
     public void setIndex(int index) {
         this.index = index;
+    }
+
+
+    public int getNext() throws ReaderException {
+
+         nextSymbol = 0;
+
+        try {
+            nextSymbol = reader.read();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if (nextSymbol != -1)
+            return nextSymbol;
+        else {
+            return -1;
+        }
     }
 }
