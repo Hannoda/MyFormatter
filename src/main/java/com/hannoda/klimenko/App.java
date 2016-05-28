@@ -2,6 +2,7 @@ package com.hannoda.klimenko;
 
 
 import com.hannoda.klimenko.Formatter.Formatter;
+import com.hannoda.klimenko.Formatter.FormatterException;
 import com.hannoda.klimenko.Reader.*;
 import com.hannoda.klimenko.Reader.FileReader;
 import com.hannoda.klimenko.Reader.StringReader;
@@ -31,6 +32,8 @@ public class App {
         } catch (WriterException e) {
             e.printStackTrace();
             throw new WriterException("WriterException", e);
+        } catch (FormatterException e) {
+            e.printStackTrace();
         }
 
     }

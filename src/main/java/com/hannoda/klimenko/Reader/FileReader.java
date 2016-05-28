@@ -13,6 +13,8 @@ public class FileReader implements IReader {
     private char ch;
     private int index = 0;
     private int nextSymb;
+    boolean isTheNext=true;
+
 
     private void setIndex(int index) {
         this.index = index;
@@ -24,7 +26,6 @@ public class FileReader implements IReader {
             fileStream = new FileInputStream(new File("input.txt"));
 
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
             throw new ReaderException("FileNotFound", e);
         }
         fileReader = new InputStreamReader(fileStream);
@@ -41,24 +42,22 @@ public class FileReader implements IReader {
              reader = new BufferedReader(fileReader);
 
             reader.skip((long) index);
-            nextSymb = getNext();
-
+            nextSymb = reader.read();
             if (nextSymb != -1) {
+
+                this.setIsTheNext(true);
                 this.ch = (char) nextSymb;
-
                 reader.mark(index);
-
                 setIndex(index + 1);
                 return this.ch;
             } else {
+                this.setIsTheNext(false);
                 reader.close();
                 return '\u0000';
             }
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
             throw new ReaderException("FileNotFound", e);
         } catch (IOException e) {
-            e.printStackTrace();
             throw new ReaderException("IOException", e);
         }
     }
@@ -68,24 +67,16 @@ public class FileReader implements IReader {
         try {
             reader.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new ReaderException("IOException",e);
         }
     }
 
-    public int getNext() throws ReaderException {
+    private void setIsTheNext (boolean value){
+        this.isTheNext = value;
+    }
 
-        int nextSymbol = 0;
-        try {
-            nextSymbol = reader.read();
-        } catch (IOException e) {
-            e.printStackTrace();
-
-        }
-        if (nextSymbol != -1)
-            return nextSymbol;
-        else {
-            return -1;
-        }
+    public boolean isTheNext(){
+        return isTheNext;
     }
 
 }

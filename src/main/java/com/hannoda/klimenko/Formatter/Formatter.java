@@ -7,34 +7,36 @@ import com.hannoda.klimenko.Writter.IWriter;
 import com.hannoda.klimenko.Writter.WriterException;
 
 
-
-
 /**
  * Provides formatting of character of the file
  */
 public class Formatter {
+    int indent=0;
     public int getIndent() {
         return indent;
     }
 
-    public void setIndent(int indent) {
-        this.indent = indent;
-        if(indent<0)this.indent = 0;
+    public void setIndent(int indent) throws FormatterException {
+        if(indent<0){
+            throw new FormatterException("Extra character \"}\"");
+        }
+        else this.indent = indent;
     }
-    public void addIndent(int num){
+    public void addIndent(int num) throws FormatterException {
         setIndent(getIndent()+num);
     }
-    public void decreaseIndent(int num){
-        setIndent(getIndent()-num);
+    public void decreaseIndent(int num) throws FormatterException {
+        if(getIndent()-num<0){
+            throw new FormatterException("Extra character \"}\"");
+        }
+        else setIndent(getIndent()-num);
+
     }
 
-    int indent=0;
-
-
-    public int format(IReader reader, IWriter writer) throws ReaderException, WriterException {
-        char aloneSymbol;
+    public int format(IReader reader, IWriter writer) throws FormatterException{
+            char aloneSymbol;
         try {
-            while (reader.getNext() != -1) {
+            while (reader.isTheNext()) {
                 aloneSymbol = reader.read();
                 switch (aloneSymbol) {
                     case ';':
@@ -49,8 +51,8 @@ public class Formatter {
                         break;
                     case '}':
 
-                        decreaseIndent(4);
                         writer.write("\r\n");
+                        decreaseIndent(4);
                         writer.printIndent(indent);
                         writer.write(String.valueOf(aloneSymbol)+System.lineSeparator());
 
@@ -63,14 +65,16 @@ public class Formatter {
 
             }
         } catch (ReaderException er) {
-            er.printStackTrace();
-            throw new ReaderException("hkh", er);
-        } catch (WriterException e) {
-            e.printStackTrace();
-            throw new WriterException("WriterException", e);
+            throw new FormatterException("Read error", er);
+        } catch (WriterException er) {
+            throw new FormatterException("Write error", er);
         }
 
-        reader.close();
+        try {
+            reader.close();
+        } catch (ReaderException er) {
+            throw new FormatterException("Can't close the stream", er);
+        }
         return 0;
 
     }

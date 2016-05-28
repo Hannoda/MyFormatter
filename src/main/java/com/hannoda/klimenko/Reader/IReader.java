@@ -14,6 +14,7 @@ public interface IReader {
      * @throws ReaderException
      */
     char read() throws ReaderException;
-    public int getNext() throws ReaderException;
+   // public int getNext() throws ReaderException;
+    boolean isTheNext();
     void close() throws ReaderException;
 }

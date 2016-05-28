@@ -1,5 +1,7 @@
 package com.hannoda.klimenko.Reader;
 
+import com.hannoda.klimenko.Formatter.FormatterException;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -9,10 +11,11 @@ import java.io.IOException;
 public class ReaderException extends Exception {
     private Exception hidden;
 
+    public ReaderException(String message, FormatterException er) {
+    }
+
     public Exception getHiddenException() {
-
         return hidden;
-
     }
 
     public ReaderException(String message) {

@@ -11,6 +11,7 @@ public class StringReader implements IReader{
     private char ch;
     private int index = 0;
     private int nextSymbol;
+    boolean isTheNext=true;
     String s ="while (inputStream.hasNext()){char symbol = inputStream.read();if(symbol == ‘ ‘){whiteSpaceCount++;}}";
     java.io.StringReader reader;
 
@@ -27,12 +28,17 @@ public class StringReader implements IReader{
     public char read() throws ReaderException {
 
         try {
+            nextSymbol=reader.read();
             if (nextSymbol != -1) {
+                setIsTheNext(true);
                // reader.reset();
                 this.ch = (char)nextSymbol;
                 reader.mark(index);
                 setIndex(index + 1);
-            } else close();
+            } else {
+                setIsTheNext(false);
+                close();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -67,20 +73,12 @@ public class StringReader implements IReader{
     }
 
 
-    public int getNext() throws ReaderException {
-
-         nextSymbol = 0;
-
-        try {
-            nextSymbol = reader.read();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        if (nextSymbol != -1)
-            return nextSymbol;
-        else {
-            return -1;
-        }
+    private void setIsTheNext (boolean value){
+        this.isTheNext = value;
     }
+
+    public boolean isTheNext(){
+        return isTheNext;
+    }
+
 }
