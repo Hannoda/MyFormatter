@@ -1,7 +1,6 @@
 package com.hannoda.klimenko.Writter;
 
 
-
 /**
  * Provides writing character of the string
  */
@@ -16,9 +15,9 @@ public class StringWriter implements IWriter {
         System.out.print(output.toString());
     }
 
-    public void printIndent(int theNumberOfIndents){
-    for(int i=0; i<=theNumberOfIndents; i++)
-        System.out.print(" ");
+    public void printIndent(int theNumberOfIndents) {
+        for (int i = 0; i <= theNumberOfIndents; i++)
+            System.out.print(" ");
     }
 
 }

@@ -15,7 +15,7 @@ import com.hannoda.klimenko.Writter.WriterException;
  * Main
  */
 public class App {
-    public static void main(String[] args) throws WriterException {
+    public static void main(String[] args) throws Exception {
 
 
         Formatter fileFormatter = new Formatter();
@@ -23,17 +23,16 @@ public class App {
 
         try {
 
-            fileFormatter.format(new FileReader(),new FileWriter());
-            stringFormatter.format(new StringReader(),new StringWriter());
+            fileFormatter.format(new FileReader(), new FileWriter());
+            stringFormatter.format(new StringReader(), new StringWriter());
 
         } catch (ReaderException e) {
-            e.printStackTrace();
-            throw new WriterException("ReaderException", e);
+            throw new WriterException("Read Error", e);
         } catch (WriterException e) {
-            e.printStackTrace();
-            throw new WriterException("WriterException", e);
+            throw new WriterException("Write Error", e);
         } catch (FormatterException e) {
-            e.printStackTrace();
+            throw new WriterException("Format Error", e).getHiddenException();
+
         }
 
     }

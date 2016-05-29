@@ -1,4 +1,5 @@
 package com.hannoda.klimenko.Writter;
+
 import java.io.*;
 
 
@@ -59,7 +60,7 @@ public class FileWriter implements IWriter {
     }
 
     public void printIndent(int theNumberOfIndents) throws WriterException {
-        for(int i=0; i<=theNumberOfIndents; i++) {
+        for (int i = 0; i <= theNumberOfIndents; i++) {
             try {
                 printWriter.print(" ");
 
@@ -68,7 +69,7 @@ public class FileWriter implements IWriter {
                 throw new WriterException("FileNotFound", e);
             }
         }
-            printWriter.flush();
+        printWriter.flush();
 
     }
 
